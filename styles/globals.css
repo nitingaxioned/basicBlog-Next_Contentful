@@ -1,0 +1,38 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: #ccc;
+  color: #111;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.center {
+  text-align: center;
+}
+
+main {
+  width: 80%;
+  margin: auto;
+  min-height: calc(100vh - 185px);
+}
+
+footer {
+  width: 100%;
+  display: flex;
+  background-color: #333;
+  align-items: center;
+  justify-content: center;
+  color: #777;
+}
