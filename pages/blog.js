@@ -28,6 +28,13 @@ export default function Blog({ blog_posts }) {
             <BlogCard key={blog_post.sys.id} blog_post={blog_post}/>
         ))}
       </ul>
+      <style jsx>{`
+        .blog-list {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-gap: 20px 60px;
+        }
+      `}</style>
     </>
     )
 
