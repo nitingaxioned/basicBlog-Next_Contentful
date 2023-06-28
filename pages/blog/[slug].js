@@ -2,6 +2,7 @@ import { createClient } from 'contentful'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import Image from 'next/image'
 import { parseISO, format } from 'date-fns';
+import BlogCard from '../../components/BlogCard'
 
 const client = createClient({
   space: 'yo4b4xfnucbc',
@@ -38,7 +39,7 @@ export const getStaticProps = async ({ params }) => {
 }
 
 export default function BlogDetails({blog_post}) {
-  const { title, slug, thumbnail, bannerImage, tags, author, content} = blog_post.fields
+  const { title, slug, thumbnail, bannerImage, tags, author, content, relatedPost} = blog_post.fields
 
   const dateString = blog_post.sys.createdAt;
   const date = parseISO(dateString);
@@ -59,11 +60,10 @@ export default function BlogDetails({blog_post}) {
         <span>Publised on <time dateTime={dateString}>{format(date, 'LLLL d, yyyy')}</time> </span>
         <br/>
         <span>Author : { author } </span>
-        <div className="blog-tags">{tags.map(tag => (
-          <>
-          <h4>Tags -</h4>
+        <div className="blog-tags">
+        <h4>Tags -</h4>
+        {tags.map(tag => (
           <span className="blog-tag" key={tag}>{ tag }</span>
-          </>
         ))}
         </div>
       </div>
@@ -76,11 +76,20 @@ export default function BlogDetails({blog_post}) {
           height={thumbnail.fields.file.details.image.height}
         />
       </div>
-
+      {relatedPost &&
+        <div className="related-post">
+          <h2>Related Post:-</h2>
+          <ul className="blog-list">
+            <BlogCard key={relatedPost.sys.id} blog_post={relatedPost}/>
+          </ul>
+        </div>
+      }
       <style jsx>{`
         .banner {
           width: 125%;
           position: relative;
+          max-height: 400px;
+          overflow: hidden;
           left: -10vw;
         } 
 
@@ -98,6 +107,16 @@ export default function BlogDetails({blog_post}) {
 
         .content {
           max-width: 800px;
+        }
+
+        .related-post {
+          padding: 50px 0;
+        }
+
+        .blog-list {
+          display: flex;
+          flex-wrap: wrap;
+          width: 300px;
         }
       `}</style>
     </div>
